@@ -49,7 +49,7 @@ const PRESETS = {
 type ScenarioType = 'conservative' | 'base' | 'aggressive' | 'custom';
 
 export default function App() {
-  // Global simulator state
+  // Global simulator state (numbers used for models)
   const [seedRate, setSeedRate] = useState<number>(PRESETS.base.seedRate);
   const [avgMembers, setAvgMembers] = useState<number>(PRESETS.base.avgMembers);
   const [conversionRate, setConversionRate] = useState<number>(PRESETS.base.conversionRate);
@@ -57,22 +57,67 @@ export default function App() {
   const [scenario, setScenario] = useState<ScenarioType>('base');
   const [activeTab, setActiveTab] = useState<string>('growth');
 
+  // Local string inputs for text boxes to avoid React controlled input cursor/decimal loss
+  const [seedRateStr, setSeedRateStr] = useState<string>(PRESETS.base.seedRate.toString());
+  const [avgMembersStr, setAvgMembersStr] = useState<string>(PRESETS.base.avgMembers.toString());
+  const [conversionRateStr, setConversionRateStr] = useState<string>(PRESETS.base.conversionRate.toString());
+  const [acvStr, setAcvStr] = useState<string>(PRESETS.base.acv.toString());
+
   // Apply scenario presets
   const handleScenarioChange = (type: ScenarioType) => {
     setScenario(type);
     if (type !== 'custom') {
       const preset = PRESETS[type];
       setSeedRate(preset.seedRate);
+      setSeedRateStr(preset.seedRate.toString());
       setAvgMembers(preset.avgMembers);
+      setAvgMembersStr(preset.avgMembers.toString());
       setConversionRate(preset.conversionRate);
+      setConversionRateStr(preset.conversionRate.toString());
       setAcv(preset.acv);
+      setAcvStr(preset.acv.toString());
     }
   };
 
-  // Helper to handle manual lever changes
-  const handleLeverChange = (setter: React.Dispatch<React.SetStateAction<number>>, value: number) => {
-    setter(value);
+  // Helper to handle slider changes
+  const handleSliderChange = (
+    setterNum: React.Dispatch<React.SetStateAction<number>>,
+    setterStr: React.Dispatch<React.SetStateAction<string>>,
+    value: number
+  ) => {
+    setterNum(value);
+    setterStr(value.toString());
     setScenario('custom');
+  };
+
+  // Helper to handle manual number input changes (allows empty strings and typing decimals)
+  const handleNumberInputChange = (
+    setterNum: React.Dispatch<React.SetStateAction<number>>,
+    setterStr: React.Dispatch<React.SetStateAction<string>>,
+    text: string
+  ) => {
+    setterStr(text);
+    setScenario('custom');
+    
+    const parsed = Number(text);
+    if (!isNaN(parsed) && text !== '') {
+      setterNum(parsed);
+    } else if (text === '') {
+      setterNum(0); // calculation fallback for empty state
+    }
+  };
+
+  // Helper to clamp values on blur
+  const handleNumberInputBlur = (
+    setterNum: React.Dispatch<React.SetStateAction<number>>,
+    setterStr: React.Dispatch<React.SetStateAction<string>>,
+    value: number,
+    min: number,
+    max: number
+  ) => {
+    const clamped = Math.max(min, Math.min(max, value));
+    setterNum(clamped);
+    setterStr(clamped.toString());
   };
 
   // Mathematical model calculation for 18 months
@@ -300,16 +345,15 @@ export default function App() {
                     max="25"
                     step="1"
                     value={seedRate}
-                    onChange={(e) => handleLeverChange(setSeedRate, Number(e.target.value))}
+                    onChange={(e) => handleSliderChange(setSeedRate, setSeedRateStr, Number(e.target.value))}
                     className="lever-slider"
                   />
                   <input
-                    type="number"
-                    min="1"
-                    max="25"
-                    value={seedRate}
+                    type="text"
+                    value={seedRateStr}
                     aria-label="Anchor communities seeded/month value input"
-                    onChange={(e) => handleLeverChange(setSeedRate, Math.max(1, Number(e.target.value)))}
+                    onChange={(e) => handleNumberInputChange(setSeedRate, setSeedRateStr, e.target.value)}
+                    onBlur={() => handleNumberInputBlur(setSeedRate, setSeedRateStr, seedRate, 1, 25)}
                     className="lever-number-input"
                   />
                 </div>
@@ -329,16 +373,15 @@ export default function App() {
                     max="500"
                     step="10"
                     value={avgMembers}
-                    onChange={(e) => handleLeverChange(setAvgMembers, Number(e.target.value))}
+                    onChange={(e) => handleSliderChange(setAvgMembers, setAvgMembersStr, Number(e.target.value))}
                     className="lever-slider"
                   />
                   <input
-                    type="number"
-                    min="10"
-                    max="500"
-                    value={avgMembers}
+                    type="text"
+                    value={avgMembersStr}
                     aria-label="Avg members per community value input"
-                    onChange={(e) => handleLeverChange(setAvgMembers, Math.max(10, Number(e.target.value)))}
+                    onChange={(e) => handleNumberInputChange(setAvgMembers, setAvgMembersStr, e.target.value)}
+                    onBlur={() => handleNumberInputBlur(setAvgMembers, setAvgMembersStr, avgMembers, 10, 500)}
                     className="lever-number-input"
                   />
                 </div>
@@ -358,17 +401,15 @@ export default function App() {
                     max="20"
                     step="0.5"
                     value={conversionRate}
-                    onChange={(e) => handleLeverChange(setConversionRate, Number(e.target.value))}
+                    onChange={(e) => handleSliderChange(setConversionRate, setConversionRateStr, Number(e.target.value))}
                     className="lever-slider lever-slider-green"
                   />
                   <input
-                    type="number"
-                    min="0.5"
-                    max="20"
-                    step="0.5"
-                    value={conversionRate}
+                    type="text"
+                    value={conversionRateStr}
                     aria-label="Member-to-paid conversion rate percentage value input"
-                    onChange={(e) => handleLeverChange(setConversionRate, Math.max(0.5, Number(e.target.value)))}
+                    onChange={(e) => handleNumberInputChange(setConversionRate, setConversionRateStr, e.target.value)}
+                    onBlur={() => handleNumberInputBlur(setConversionRate, setConversionRateStr, conversionRate, 0.5, 20)}
                     className="lever-number-input"
                   />
                 </div>
@@ -388,17 +429,15 @@ export default function App() {
                     max="25000"
                     step="500"
                     value={acv}
-                    onChange={(e) => handleLeverChange(setAcv, Number(e.target.value))}
+                    onChange={(e) => handleSliderChange(setAcv, setAcvStr, Number(e.target.value))}
                     className="lever-slider lever-slider-amber"
                   />
                   <input
-                    type="number"
-                    min="500"
-                    max="25000"
-                    step="500"
-                    value={acv}
+                    type="text"
+                    value={acvStr}
                     aria-label="Avg ACV value input"
-                    onChange={(e) => handleLeverChange(setAcv, Math.max(500, Number(e.target.value)))}
+                    onChange={(e) => handleNumberInputChange(setAcv, setAcvStr, e.target.value)}
+                    onBlur={() => handleNumberInputBlur(setAcv, setAcvStr, acv, 500, 25000)}
                     className="lever-number-input"
                   />
                 </div>

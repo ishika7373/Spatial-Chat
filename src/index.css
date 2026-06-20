@@ -236,14 +236,16 @@ body {
   background-color: var(--color-bg-card);
   border: none;
   font-family: inherit;
-  font-size: 0.75rem;
+  font-size: 0.68rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 0.6rem 0.5rem;
+  letter-spacing: 0.03em;
+  padding: 0.6rem 0.2rem;
   cursor: pointer;
   transition: all 0.15s ease;
   color: var(--color-text-muted);
+  white-space: nowrap;
+  text-align: center;
 }
 
 .scenario-btn:not(:last-child) {
