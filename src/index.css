@@ -1,0 +1,651 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --color-purple: #7F77DD;
+  --color-green: #1D9E75;
+  --color-amber: #D97706;
+  --color-gray: #6B7280;
+  --color-gray-light: #E5E7EB;
+  --color-bg-base: #F9FAFB;
+  --color-bg-card: #FFFFFF;
+  --color-text-main: #1F2937;
+  --color-text-muted: #6B7280;
+  --color-border: #E5E7EB;
+  
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--color-bg-base);
+  color: var(--color-text-main);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.app-header {
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-bg-card);
+  padding: 1.5rem 2rem;
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.brand-logo {
+  width: 32px;
+  height: 32px;
+  background-color: var(--color-purple);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.brand-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: var(--color-text-main);
+}
+
+.brand-subtitle {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+/* Tabs */
+.tabs-container {
+  display: flex;
+  gap: 0.5rem;
+  background-color: #F3F4F6;
+  padding: 0.25rem;
+  border-radius: 8px;
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  outline: none;
+}
+
+.tab-btn:hover {
+  color: var(--color-text-main);
+}
+
+.tab-btn.active {
+  background-color: var(--color-bg-card);
+  color: var(--color-purple);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Main Container */
+.app-content {
+  flex: 1;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Cards & Layout */
+.card {
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02), 0 1px 2px rgba(0,0,0,0.04);
+}
+
+.card-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-text-main);
+  margin-bottom: 1rem;
+}
+
+/* Metric Cards Row */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .header-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .tabs-container {
+    width: 100%;
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.metric-card {
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.metric-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.metric-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+  line-height: 1.2;
+}
+
+.metric-trend {
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* Grid Layout for Tab 1 */
+.simulator-layout {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+  .simulator-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Presets & Control Levers */
+.controls-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.scenario-toggle {
+  display: flex;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.scenario-btn {
+  flex: 1;
+  background-color: var(--color-bg-card);
+  border: none;
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.6rem 0.5rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  color: var(--color-text-muted);
+}
+
+.scenario-btn:not(:last-child) {
+  border-right: 1px solid var(--color-border);
+}
+
+.scenario-btn.active-conservative {
+  background-color: #F3F4F6;
+  color: var(--color-text-main);
+}
+
+.scenario-btn.active-base {
+  background-color: rgba(127, 119, 221, 0.1);
+  color: var(--color-purple);
+}
+
+.scenario-btn.active-aggressive {
+  background-color: rgba(29, 158, 117, 0.1);
+  color: var(--color-green);
+}
+
+.scenario-btn.active-custom {
+  background-color: #FEF3C7;
+  color: #D97706;
+}
+
+.lever-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.lever-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lever-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-main);
+}
+
+.lever-value-badge {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-purple);
+  background-color: rgba(127, 119, 221, 0.08);
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+}
+
+.lever-slider-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.lever-slider {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--color-gray-light);
+  outline: none;
+}
+
+.lever-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--color-purple);
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.lever-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.lever-slider-green::-webkit-slider-thumb {
+  background: var(--color-green);
+}
+
+.lever-slider-amber::-webkit-slider-thumb {
+  background: var(--color-amber);
+}
+
+.lever-number-input {
+  width: 70px;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.875rem;
+  text-align: right;
+  color: var(--color-text-main);
+  outline: none;
+}
+
+.lever-number-input:focus {
+  border-color: var(--color-purple);
+}
+
+/* Insight Box */
+.insight-box {
+  margin-top: 1.5rem;
+  background-color: #F9FAFB;
+  border: 1px dashed var(--color-border);
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.insight-icon {
+  color: var(--color-purple);
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.insight-text {
+  font-size: 0.875rem;
+  color: var(--color-text-main);
+}
+
+.insight-highlight {
+  font-weight: 600;
+  color: var(--color-purple);
+}
+
+/* Tab 2: Flywheel Logic */
+.flywheel-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+.flywheel-diagram-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 2rem;
+  min-height: 420px;
+  position: relative;
+}
+
+.flywheel-node-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: rgba(127, 119, 221, 0.05);
+  border: 1px solid rgba(127, 119, 221, 0.2);
+  color: var(--color-purple);
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  max-width: 250px;
+  line-height: 1.4;
+}
+
+.profile-tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.profile-tag {
+  background-color: var(--color-bg-base);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-main);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  cursor: default;
+}
+
+.profile-tag:hover {
+  background-color: rgba(127, 119, 221, 0.05);
+  border-color: var(--color-purple);
+  color: var(--color-purple);
+}
+
+/* Tab 3: Revenue Streams */
+.revenue-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .revenue-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.revenue-bucket-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.revenue-bucket-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.bucket-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+}
+
+.bucket-name {
+  font-weight: 500;
+  color: var(--color-text-main);
+}
+
+.bucket-values {
+  font-weight: 600;
+}
+
+.bucket-percentage {
+  color: var(--color-text-muted);
+  margin-right: 0.5rem;
+}
+
+.bucket-dollars {
+  color: var(--color-text-main);
+}
+
+.progress-bar-bg {
+  height: 12px;
+  background-color: #F3F4F6;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.3s ease;
+}
+
+.doughnut-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 250px;
+}
+
+.benchmarks-box {
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+  padding-top: 1.5rem;
+}
+
+.benchmarks-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 640px) {
+  .benchmarks-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.benchmark-card {
+  background-color: #F9FAFB;
+  border: 1px solid var(--color-border);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+}
+
+.benchmark-label {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.benchmark-val {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text-main);
+}
+
+/* Tab 4: Activation Playbook */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background-color: white;
+}
+
+.playbook-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.875rem;
+}
+
+.playbook-table th {
+  background-color: #F9FAFB;
+  border-bottom: 1px solid var(--color-border);
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  color: var(--color-text-main);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+.playbook-table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text-main);
+  vertical-align: top;
+}
+
+.playbook-table tr:last-child td {
+  border-bottom: none;
+}
+
+.playbook-table tr:hover {
+  background-color: #FAFAFA;
+}
+
+.playbook-step {
+  font-weight: 600;
+  color: var(--color-purple);
+  width: 50px;
+}
+
+.badge-purple {
+  background-color: rgba(127, 119, 221, 0.08);
+  color: var(--color-purple);
+  border: 1px solid rgba(127, 119, 221, 0.2);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.badge-green {
+  background-color: rgba(29, 158, 117, 0.08);
+  color: var(--color-green);
+  border: 1px solid rgba(29, 158, 117, 0.2);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.badge-gray {
+  background-color: #F3F4F6;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.badge-owner {
+  display: inline-block;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background-color: #E5E7EB;
+  color: #374151;
+}
+
+/* Animations for Flywheel Node Pathing */
+@keyframes dash {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+
+.flow-arrow-animated {
+  stroke-dasharray: 5, 5;
+  animation: dash 1s linear infinite;
+}
